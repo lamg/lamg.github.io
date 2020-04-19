@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on LAMG&#39;s personal blog</title>
+    <link>http://lamg.github.io/post/</link>
+    <description>Recent content in Posts on LAMG&#39;s personal blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 Luis Ángel Méndez Gort</copyright>
+    <lastBuildDate>Sun, 19 Apr 2020 13:39:47 +0200</lastBuildDate>
+    
+	<atom:link href="http://lamg.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using Go in Cuba</title>
+      <link>http://lamg.github.io/post/using_go_in_cuba/</link>
+      <pubDate>Sun, 19 Apr 2020 13:39:47 +0200</pubDate>
+      
+      <guid>http://lamg.github.io/post/using_go_in_cuba/</guid>
+      <description>Some packages and tools related to Go programming cannot be downloaded from Cuba, due some restrictions Google applies. The savior for such cases turns out to be Tor Browser, with a little addition.
+These restrictions hit your face when you do something like:
+git clone git@github.com:lamg/proxy.git cd proxy/cmd/proxy go install since that project has dependencies hosted at the official Go site, blocked from Cuba, which are golang.org/x/net and golang.org/x/text.
+In this case, it is easy to download them manually from https://github.</description>
+    </item>
+    
+  </channel>
+</rss>

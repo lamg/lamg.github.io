@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>Using Go in Cuba</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../images/lamg.png"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Luis Ángel Méndez Gort
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    Programming without errors and pedantry
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/lamg" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/luis-%C3%A1ngel-m%C3%A9ndez-gort-44b09ab9/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://twitter.com/LAMG_0" target="_blank">
+                            <i class="fab fa-twitter fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:gort.andres000@gmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Using Go in Cuba</h3>
+            
+            <small class="text-muted">Published April 19, 2020</small>
+        </div>
+
+        <article>
+            <p><img src="../../images/forbidden.png" alt="Forbidden"></p>
+<p>Some packages and tools related to <a href="https://golang.org">Go</a> programming cannot be downloaded from Cuba, due some restrictions Google applies. The savior for such cases turns out to be <a href="https://www.torproject.org/projects/torbrowser.html.en">Tor Browser</a>, with a little addition.</p>
+<p>These restrictions hit your face when you do something like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone git@github.com:lamg/proxy.git
+cd proxy/cmd/proxy
+go install
+</code></pre></div><p>since that project has dependencies hosted at the <a href="https://golang.org">official Go site</a>, blocked from Cuba, which are golang.org/x/net and golang.org/x/text.</p>
+<p>In this case, it is easy to download them manually from <a href="https://github.com/golang/net">https://github.com/golang/net</a> and <a href="https://github.com/golang/text">https://github.com/golang/text</a> respectively, and to put them under golang.org/x at the GOPATH. But is better to let the <code>go</code> command do that work for you, and it can be done if you replace the last command at the previous script by <code>https_proxy=http://localhost:8080 go install</code>.</p>
+<p>This, of course, will not work right now since there&rsquo;s no such HTTP proxy tunneling requests made by the <code>go</code> command through another country, with access to <a href="https://golang.org">Go</a>, at localhost:8080; which is what that line should do. For achieving that download and run <a href="https://www.torproject.org/projects/torbrowser.html.en">Tor Browser</a>, followed by <code>proxy -p socks5://localhost:9150 -f</code>. However, the latter will not work right now, since you need the <code>proxy</code> command available. You can do that downloading the binary from <a href="https://github.com/lamg/proxy/releases,">https://github.com/lamg/proxy/releases,</a> and placing it at your PATH. Currently you will find there only the <a href="https://github.com/lamg/proxy/releases/download/v3.0.1/proxy_3.0.1_linux-amd64.zip">Linux AMD64 binary</a>, due to rational lazyness.</p>
+
+        </article>
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            © 2020 Luis Ángel Méndez Gort
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>
