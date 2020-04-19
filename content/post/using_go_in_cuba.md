@@ -1,7 +1,7 @@
----
-title: "Using Go in Cuba"
-date: 2020-04-19T13:39:47+02:00
----
++++
+title = "Using Go in Cuba"
+date = 2020-04-19T13:39:47+02:00
++++
 
 ![Forbidden](/images/forbidden.png)
 
