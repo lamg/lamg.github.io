@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Using git over SSH in Cuba or drink your favorite poison</title>
+      <link>http://lamg.github.io/post/using_git_over_ssh_in_cuba/</link>
+      <pubDate>Thu, 23 Apr 2020 22:31:55 +0200</pubDate>
+      
+      <guid>http://lamg.github.io/post/using_git_over_ssh_in_cuba/</guid>
+      <description>Using Git over the HTTPS protocol has the shortcoming, at least on my usual Linux setup interacting with GitHub, of asking user name and password for every modification on the remote branch. The solution for that is using git over SSH. You upload your SSH public key to GitHub, add the remote branch with an URL like git@github.com:user/repository.git, and after that the communication is smoother. I have the suspicion that is even more secure.</description>
+    </item>
+    
+    <item>
       <title>Using Go in Cuba</title>
       <link>http://lamg.github.io/post/using_go_in_cuba/</link>
       <pubDate>Sun, 19 Apr 2020 13:39:47 +0200</pubDate>

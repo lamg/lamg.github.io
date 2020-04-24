@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>Using git over SSH in Cuba or drink your favorite poison</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../images/lamg.png"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Luis Ángel Méndez Gort
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    Programming without errors and pedantry
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/lamg" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/luis-%C3%A1ngel-m%C3%A9ndez-gort-44b09ab9/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://twitter.com/LAMG_0" target="_blank">
+                            <i class="fab fa-twitter fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:gort.andres000@gmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Using git over SSH in Cuba or drink your favorite poison</h3>
+            
+            <small class="text-muted">Published April 23, 2020</small>
+        </div>
+
+        <article>
+            <p>Using <a href="https://git-scm.com">Git</a> over the HTTPS protocol has the shortcoming, at least on my usual Linux setup interacting with <a href="https://github.com">GitHub</a>, of asking user name and password for every modification on the remote branch. The solution for that is using <code>git</code> over <a href="https://en.wikipedia.org/wiki/Secure_Shell">SSH</a>. You upload your SSH public key to GitHub, add the remote branch with an URL like <code>git@github.com:user/repository.git</code>, and after that the communication is smoother. I have the suspicion that is even more secure.</p>
+<p>But in Cuba you have two ways of connecting to the internet:</p>
+<ul>
+<li>Work place or school: implies you&rsquo;re always behind an HTTP proxy, therefore SSH is blocked by HTTP proxy definition. Also the network administrators block entire sections of the Word Wide Web like services that can be a source of privacy, information, political activism or revenue for the users. I&rsquo;ve seen them block all the webmail providers of the planet, using blacklists they download from the WWW.</li>
+<li>WiFi, home ADSL and mobile data: the state monopoly of telecommunications also blocks services with the same objective as above, but not so aggressively, however SSH sometimes is blocked. The aggressiveness is kept in the prices of those services: having an average salary of <a href="https://www.cibercuba.com/noticias/2019-07-17-u199291-e199291-s27061-asi-evoluciono-ultimos-anos-salario-medio-cuba-777-pesos">42 dollars per month</a>, Cubans pay <a href="https://twitter.com/Cubacel_ETECSA/status/1139940699271520263/photo/1">1 dollar for one hour of WiFi</a>, <a href="https://www.yucabyte.org/2019/08/02/rebaja-etecsa-nautahogar/">15 dollars for 30 hours of home ADSL</a> and <a href="https://twitter.com/ETECSA_Cuba/status/1070120545021292544/photo/1">7 dollars for 600MB of mobile data</a>.</li>
+</ul>
+<p>As usual Internet situation in Cuba is summarized with «Drink your favorite poison». Then you need to develop an imperturbable calm, because at some point you&rsquo;ll listen government officials congratulate themselves, repeatedly, for increasing Internet access in the country under <em>harsh</em> economical sanctions by USA. They never mention that the so called <em>harsh</em> sanctions have exceptions for telecommunications equipment. Even in the Obama era they were offered <em>free</em> infrastructure, later <a href="http://www.juventudrebelde.cu/cuba/2015-07-11/a-los-jovenes-la-verdad-argumentada-y-no-el-dogma">rejected</a> because Internet access without strict control could lead to a regime change.</p>
+<p>In general if you want to use SSH in Cuba you need to rely on <a href="https://torproject.org">Tor</a> or a free VPN, because it&rsquo;s impossible to make online payments from within the country (maybe some friend abroad could help you). Tor provides something marvelous for the nerds inside the island: a <a href="https://en.wikipedia.org/wiki/SOCKS">SOCKS</a> proxy with Internet access. With that you can tunnel SSH using a simple configuration:</p>
+<p>Create a file <code>~/.ssh/config</code> with the following content:</p>
+<pre><code>Host github.com
+	User your-github-user
+	ProxyCommand nc -x localhost:9150 %h %p
+</code></pre><p>For getting that working you need the <a href="https://en.wikipedia.org/wiki/Netcat">netcat</a> program installed (called <code>nc</code> from command line), and having the SOCKS proxy server that comes with Tor up and connected to the Internet. Fortunately Tor works under a variety of censorship techniques like an HTTP proxy.</p>
+
+        </article>
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            © 2020 Luis Ángel Méndez Gort
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>
