@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Falco.Markup" Version="1.1.1" />
+    <PackageReference Include="Fss-lib.Core" Version="2.1.0" />
+    <PackageReference Include="Fss-lib.Falco" Version="2.3.1" />
     <PackageReference Include="Markdig" Version="0.37.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

@@ -1,36 +1,15 @@
-<html>
-<head>
-<title>Blog Post</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-</head>
-<body>
-<h1>Exception vs Result</h1>
-
+<!DOCTYPE html><html lang="en" class="css-267185508"><head><meta charset="UTF-8" /><title>LAMG</title><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet" /><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body><h1>Exception vs Result</h1>
 <p>An exception happens after the violation of a precondition in our code. For example, in the code below <code>y ≠ 0</code> is a precondition:</p>
+<pre><code class="language-fsharp">let x = stdin.ReadLine() |> int
 
-<pre><code class="language-fsharp">
-let x = stdin.ReadLine() |&gt; int
-
-let y = stdin.ReadLine() |&gt; int
+let y = stdin.ReadLine() |> int
 
 let r = x / y
 
-printfn $&quot;{x} / {y} = {r}&quot;
-</code></pre>
-<p>We also know that in some situations it is better to treat the error as any other value than to throw an exception. So the question is, do we represent an error as a value or do we throw an exception?</p>
-
+printfn $"{x} / {y} = {r}"</code></pre><p>We also know that in some situations it is better to treat the error as any other value than to throw an exception. So the question is, do we represent an error as a value or do we throw an exception?</p>
 <p>My way of answering such dilemma is: can the abnormal situation be followed by operations in the same domain where it occurred or do we have to leave it?</p>
-
 <p>In the example above after <code>y = 0</code> there is no calculation allowing us to continue, it's the user who should know that <code>y = 0</code> is not part of the domain of the operation. So it makes sense to catch the exception or if possible to never let such value enter that scope.</p>
-
 <p>Sometimes we discover that our domain can be enriched with values representing abnormal situations, and that way we can continue operating within it. However, in some cases, adding a <code>Result</code> type doesn't change the fact the only thing we can do is leaving one or more scopes.</p>
-
 <p>In those instances an exception is more appropriate because adding <code>Result</code> is only making more cumbersome our way out.</p>
-
 <p>Originally posted on 2023/10/21 on <a href="https://twitter.com/lamg__/status/1715661969724690682">Twitter</a></p>
-
-
-</body>
-</html>
+</body></html>

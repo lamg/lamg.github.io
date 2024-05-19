@@ -1,31 +1,20 @@
-<html>
-<head>
-<title>Blog Post</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-</head>
-<body>
-<h1>Fixed points</h1>
-
+<!DOCTYPE html><html lang="en" class="css-267185508"><head><meta charset="UTF-8" /><title>LAMG</title><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet" /><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body><h1>Fixed points</h1>
 <p>Let's take a look at a common implementation of a function for calculating Fibonacci numbers:</p>
-
-<pre><code class="language-fsharp">
-let fibonacci0 n =
+<pre><code class="language-fsharp">let fibonacci0 n =
 
   let mutable i, a, b = 0, 0, 1
 
 
 
-  while n &lt;&gt; i do
+  while n <> i do
 
     let next = a + b
 
-    a &lt;- b
+    a <- b
 
-    b &lt;- next
+    b <- next
 
-    i &lt;- i+1
+    i <- i+1
 
     
 
@@ -33,47 +22,34 @@ let fibonacci0 n =
 
 
 
-fibonacci0 10
-</code></pre>
-<p>Most people think since functional programing discourages mutation, that means tying their hands and being useless. However, there's a communication failure here. Functional programming is valuable, not because discourages mutation, but because it encourages structured programming and composability.</p>
+fibonacci0 10</code></pre><p>Most people think since functional programing discourages mutation, that means tying their hands and being useless. However, there's a communication failure here. Functional programming is valuable, not because discourages mutation, but because it encourages structured programming and composability.</p>
 <p>The above function contains one of those patterns that appear everywhere, and functional programming can help you to recognize and reuse it more than imperative programming. Let's take a look at the <code>power</code> function and how it allows to implement Fibonacci:</p>
-
-<pre><code class="language-fsharp">
-let rec power (f: &#39;a -&gt; &#39;a) (initial: &#39;a, n: int) =
+<pre><code class="language-fsharp">let rec power (f: 'a -> 'a) (initial: 'a, n: int) =
 
   if n = 0 then initial else power f (f initial, n - 1)
 
 
 
-let fibonacci1 n = power (fun (a, b) -&gt; (b, a + b)) ((0, 1), n) |&gt; fst
-</code></pre>
-<p>Now you can see how <code>fibonacci1</code> is verbose in those aspects essential to Fibonacci: the initial state and how it transitions to the next. The rest is left to the <code>power</code> function.</p>
-
+let fibonacci1 n = power (fun (a, b) -> (b, a + b)) ((0, 1), n) |> fst</code></pre><p>Now you can see how <code>fibonacci1</code> is verbose in those aspects essential to Fibonacci: the initial state and how it transitions to the next. The rest is left to the <code>power</code> function.</p>
 <p>Another thing <code>while</code> loops help us to find are <em>fixed points</em>, i.e. for a function <code>f</code> a value <code>c</code> that holds <code>f c = c</code>. But this pattern can be disentangled from <code>while</code> loops as well:</p>
+<pre><code class="language-fsharp">let fixedPoint (f: 'a -> 'a) (initial: 'a) =
 
-<pre><code class="language-fsharp">
-let fixedPoint (f: &#39;a -&gt; &#39;a) (initial: &#39;a) =
-
-  let rec loop (prev: &#39;a) (current: &#39;a) =
+  let rec loop (prev: 'a) (current: 'a) =
 
     if prev = current then prev else loop current (f current)
 
 
 
-  loop initial (f initial)
-</code></pre>
-<p><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD472.html">Euclid's Algorithm for calculating the Greatest Common Divisor between two positive integers</a> relies on finding a fixed point:</p>
-
-<pre><code class="language-fsharp">
-let gcd0 (a:int, b:int) =
+  loop initial (f initial)</code></pre><p><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD472.html">Euclid's Algorithm for calculating the Greatest Common Divisor between two positive integers</a> relies on finding a fixed point:</p>
+<pre><code class="language-fsharp">let gcd0 (a:int, b:int) =
 
   let mutable x = a
 
   let mutable y = b
 
-  while x &lt;&gt; y do
+  while x <> y do
 
-    if x &gt; y then x &lt;- x - y else y &lt;- y - x
+    if x > y then x <- x - y else y <- y - x
 
   
 
@@ -81,42 +57,29 @@ let gcd0 (a:int, b:int) =
 
 
 
-gcd0 (12,8)
-</code></pre>
-<p>Now, relying on our <code>fixedPoint</code> function we get:</p>
+gcd0 (12,8)</code></pre><p>Now, relying on our <code>fixedPoint</code> function we get:</p>
+<pre><code class="language-fsharp">let step (x: int, y: int) =
 
-<pre><code class="language-fsharp">
-let step (x: int, y: int) =
+  if x > y then x - y, y
 
-  if x &gt; y then x - y, y
-
-  else if x &lt; y then x, y - x
+  else if x < y then x, y - x
 
   else x, y
 
 
 
-let gcd1 = fixedPoint step &gt;&gt; fst
+let gcd1 = fixedPoint step >> fst
 
 
 
-gcd1 (12, 8)
-</code></pre>
-<p>This time we discover there's a fixed point when dividing successive elements of the Fibonacci sequence. That number is known as <a href="https://en.wikipedia.org/wiki/Golden_ratio">Golden Ratio</a>.</p>
-
-<pre><code class="language-fsharp">
-let fibonacci = Seq.unfold (fun (a, b) -&gt; Some(a, (b, a + b))) (0, 1)
+gcd1 (12, 8)</code></pre><p>This time we discover there's a fixed point when dividing successive elements of the Fibonacci sequence. That number is known as <a href="https://en.wikipedia.org/wiki/Golden_ratio">Golden Ratio</a>.</p>
+<pre><code class="language-fsharp">let fibonacci = Seq.unfold (fun (a, b) -> Some(a, (b, a + b))) (0, 1)
 
 
 
-let fixedPointSeq (xs: &#39;a seq) = xs |&gt; Seq.pairwise |&gt; Seq.find (fun (a,b) -&gt; a = b) |&gt; fst
+let fixedPointSeq (xs: 'a seq) = xs |> Seq.pairwise |> Seq.find (fun (a,b) -> a = b) |> fst
 
 
 
-fibonacci |&gt; Seq.pairwise |&gt; Seq.map (fun (a,b) -&gt; double b / double a ) |&gt; fixedPointSeq
-</code></pre>
-<p>Functions <code>power</code> and <code>fixedPoint</code> are inspired by the <a href="https://www.aplwiki.com/wiki/Power_(operator)">power operator in APL (⍣)</a></p>
-
-
-</body>
-</html>
+fibonacci |> Seq.pairwise |> Seq.map (fun (a,b) -> double b / double a ) |> fixedPointSeq</code></pre><p>Functions <code>power</code> and <code>fixedPoint</code> are inspired by the <a href="https://www.aplwiki.com/wiki/Power_(operator)">power operator in APL (⍣)</a></p>
+</body></html>

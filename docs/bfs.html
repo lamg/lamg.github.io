@@ -1,13 +1,4 @@
-<html>
-<head>
-<title>Blog Post</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-</head>
-<body>
-<h1>Revisiting BFS</h1>
-
+<!DOCTYPE html><html lang="en" class="css-267185508"><head><meta charset="UTF-8" /><title>LAMG</title><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet" /><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script><script>hljs.highlightAll();</script></head><body><h1>Revisiting BFS</h1>
 <h5>What is BFS</h5>
 <ul>
 <li><p>BFS is a way of creating a sequence with all elements of a tree or graph</p>
@@ -59,7 +50,6 @@
 <ul>
 <li>You can see the difference in comparing the following two blocks of code:</li>
 </ul>
-
 <pre><code class="language-csharp">
 using System;
 
@@ -84,7 +74,6 @@ int[] MoveFromTo() {
 }
 
 </code></pre>
-
 <pre><code class="language-fsharp">
 let moveFromTo () =
 
@@ -109,9 +98,7 @@ let moveFromTo () =
     loop from to'
 
 </code></pre>
-
 <h3>How the implementation works</h3>
-
 <ul>
 <li><p><code>GetChildren</code> is our generic way of getting children from whatever nested structure we are dealing with (trees, graphs)</p>
 </li>
@@ -122,13 +109,11 @@ let moveFromTo () =
 <li><p>Once the fold finishes we have in <code>nextLevel</code> all the nodes of level <code>n+1</code>. Since <code>nextLevel</code> is the replacement for <code>level</code> and our <code>bfs</code> function operates on particular level instances, then is time to call <code>bfs</code> with <code>nextLevel</code>. In case <code>nextLevel</code> is empty, we return the empty sequence and stop the recursive calls.</p>
 </li>
 </ul>
-
-<pre><code class="language-fsharp">
-type GetChildren&lt;&#39;a&gt; = { get: &#39;a -&gt; (GetChildren&lt;&#39;a&gt; * &#39;a list) }
+<pre><code class="language-fsharp">type GetChildren<'a> = { get: 'a -> (GetChildren<'a> * 'a list) }
 
 
 
-let rec bfs (gc: GetChildren&lt;&#39;a&gt;, n: int, level: &#39;a list) =
+let rec bfs (gc: GetChildren<'a>, n: int, level: 'a list) =
 
   seq {
 
@@ -140,9 +125,9 @@ let rec bfs (gc: GetChildren&lt;&#39;a&gt;, n: int, level: &#39;a list) =
 
       level
 
-      |&gt; List.fold
+      |> List.fold
 
-        (fun (gc, xs) x -&gt;
+        (fun (gc, xs) x ->
 
           let newGc, ys = gc.get x
 
@@ -160,27 +145,23 @@ let rec bfs (gc: GetChildren&lt;&#39;a&gt;, n: int, level: &#39;a list) =
 
         match nextLevel with
 
-        | _, [] -&gt; Seq.empty
+        | _, [] -> Seq.empty
 
-        | (chl, nl) -&gt; bfs  (chl, n+1, nl)
+        | (chl, nl) -> bfs  (chl, n+1, nl)
 
   }
-
-</code></pre>
-<h5>Testing the implementation with a graph</h5>
-
-<pre><code class="language-fsharp">
-type Graph&lt;&#39;a when &#39;a: comparison&gt; = Map&lt;&#39;a, List&lt;&#39;a&gt;&gt;
+</code></pre><h5>Testing the implementation with a graph</h5>
+<pre><code class="language-fsharp">type Graph<'a when 'a: comparison> = Map<'a, List<'a>>
 
 
 
-let graphChildren (g: Graph&lt;&#39;a&gt;) =
+let graphChildren (g: Graph<'a>) =
 
   let rec children visited =
 
     { get =
 
-        fun x -&gt;
+        fun x ->
 
           if Set.contains x visited then
 
@@ -190,15 +171,15 @@ let graphChildren (g: Graph&lt;&#39;a&gt;) =
 
           else
 
-            let newChildren = Set.add x visited |&gt; children
+            let newChildren = Set.add x visited |> children
 
 
 
             match Map.tryFind x g with
 
-            | Some xs -&gt; (newChildren, xs)
+            | Some xs -> (newChildren, xs)
 
-            | None -&gt; (newChildren, []) }
+            | None -> (newChildren, []) }
 
 
 
@@ -210,17 +191,12 @@ let g = Map [ 1, [ 2; 3; 4 ]; 2, [ 5; 6 ]; 3, [ 7; 8 ]; 4, [ 9; 10 ] ]
 
 
 
-bfs (graphChildren g, 0, [ 1 ]) |&gt; Seq.iter (printfn &quot;%A&quot;)
-</code></pre>
-<h5>Testing the implementation with a tree</h5>
-
+bfs (graphChildren g, 0, [ 1 ]) |> Seq.iter (printfn "%A")</code></pre><h5>Testing the implementation with a tree</h5>
 <p>In a tree by visiting a node there's no way of going back to it, since there are no cycles. Keeping that in mind,</p>
 <p>we can rely on a sequence of children to be consumed by <code>bfs</code>. As long as we put children in the order <code>bfs</code> expects them, the implementation will be correct.</p>
 <p>Example:</p>
 <p>We know if <code>bfs</code> gets the children of node <code>X</code>, then after that it will ask for children of node <code>X+1</code>, where <code>X</code> and <code>X+1</code> are consecutive nodes in the same level.</p>
-
-<pre><code class="language-fsharp">
-type Tree&lt;&#39;a&gt; = Node of &#39;a * Tree&lt;&#39;a&gt; list
+<pre><code class="language-fsharp">type Tree<'a> = Node of 'a * Tree<'a> list
 
 
 
@@ -230,11 +206,11 @@ let rec childrenSeq (Node(_, xs)) =
 
     match xs with
 
-    | [] -&gt; ()
+    | [] -> ()
 
-    | _ -&gt;
+    | _ ->
 
-      let nodeValues = xs |&gt; List.map (fun (Node(x, _)) -&gt; x)
+      let nodeValues = xs |> List.map (fun (Node(x, _)) -> x)
 
       yield nodeValues
 
@@ -248,23 +224,23 @@ let rec childrenSeq (Node(_, xs)) =
 
 
 
-let treeChildren (t: Tree&lt;&#39;a&gt;) =
+let treeChildren (t: Tree<'a>) =
 
-  let chs = childrenSeq t |&gt; Seq.toList
+  let chs = childrenSeq t |> Seq.toList
 
 
 
-  let rec loop (chs: (&#39;a list) list) =
+  let rec loop (chs: ('a list) list) =
 
     { get =
 
-        fun _ -&gt;
+        fun _ ->
 
           match chs with
 
-          | [] -&gt; (loop [], [])
+          | [] -> (loop [], [])
 
-          | head::tail -&gt; (loop tail, head) }
+          | head::tail -> (loop tail, head) }
 
 
 
@@ -288,7 +264,4 @@ let t =
 
 
 
-bfs (treeChildren t, 0, [ 1 ]) |&gt; Seq.iter (printfn &quot;%A&quot;)
-</code></pre>
-</body>
-</html>
+bfs (treeChildren t, 0, [ 1 ]) |> Seq.iter (printfn "%A")</code></pre></body></html>
