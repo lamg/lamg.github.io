@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Blog Post</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>Queue</h1>
+
+<p>A queue is data structure that stores a sequence of elements, while supporting two basic operations: <code>enqueue</code> and <code>dequeue</code></p>
+<p>Let's visualize how it works:</p>
+<pre><code>
+ [0; 1; 2]
+
+= { enqueue 42 }
+
+ [0; 1; 2; 42]
+
+</code></pre>
+<pre><code>
+ [0; 1; 2]
+
+= { dequeue }
+
+ 0, [1; 2]
+
+</code></pre>
+<h5>First restriction: rely on inmutable data structures</h5>
+<ul>
+<li><p>Using a list we can rely on the operator <code>::</code> for dequeueing, since pattern matching <code>x::xs</code> O(1)</p>
+</li>
+<li><p>However this means for enqueuing we need to do <code>xs @ [x]</code> which is O(n), where <code>n = xs.Length</code></p>
+</li>
+</ul>
+<h5>Solution:</h5>
+<ul>
+<li><p>rely on <code>::</code> for both <code>enqueue</code> and <code>dequeue</code>, since the operation <code>x::xs</code> is O(1)</p>
+</li>
+<li><p>We can use two lists one enqueueing and one for dequeueing, <code>front</code> and <code>rear</code> respectively</p>
+</li>
+<li><p>For dequeueing elements we do the pattern match <code>x::xs</code> on <code>front</code> getting in <code>x</code> the expected element, while in <code>xs</code> the new value for <code>front</code>.</p>
+</li>
+<li><p>For enqueueing we repleace <code>rear</code> by <code>x::rear</code>, however this list ends up reversed according the expected order when dequeueing, since <code>x</code> is its first element and should be the last dequeued.</p>
+</li>
+<li><p>At some point the <code>dequeue</code> operation will leave empty the <code>front</code> list. When that happens we can take <code>rear</code>, reverse it and use it as the new <code>front</code> while the new <code>rear</code> is an empty list.</p>
+</li>
+</ul>
+
+<pre><code class="language-fsharp">
+type Queue&lt;&#39;a&gt; = { front: &#39;a list; rear: &#39;a list }
+
+
+
+let enqueue (q: Queue&lt;&#39;a&gt;) (x: &#39;a) = { q with rear = x :: q.rear }
+
+
+
+let dequeue (q: Queue&lt;&#39;a&gt;) =
+
+  match q.front, List.rev q.rear with
+
+  | [], [] -&gt; None
+
+  | [], x :: xs -&gt; Some(x, { front = xs; rear = [] })
+
+  | x :: xs, _ -&gt; Some(x, { q with front = xs })
+
+
+
+let rec queueToSeq (q: Queue&lt;&#39;a&gt;) =
+
+  seq {
+
+    match dequeue q with
+
+    | None -&gt; ()
+
+    | Some(x, nq) -&gt;
+
+      yield x
+
+      yield! queueToSeq nq
+
+  }
+</code></pre>
+<p>Let's make a simple test for our algorithm:</p>
+
+<pre><code class="language-fsharp">
+let xs = Seq.init 10 id |&gt; Seq.toList
+
+let q = xs |&gt; Seq.fold (fun q x -&gt; enqueue q x) {front = []; rear = []}
+
+let ys = queueToSeq q |&gt; Seq.toList
+
+List.zip xs ys |&gt; List.forall (fun (x, y) -&gt; x = y)
+</code></pre>
+<p>Notice that in the current implementation of Microsoft's F# compiler, the following pattern match</p>
+<pre><code class="language-fsharp">
+match q.front, List.rev q.rear with
+
+| [], [] -&gt; ...
+
+| [], x :: xs -&gt; ...
+
+| x :: xs, _ -&gt; ...
+
+</code></pre>
+<p>evaluates <code>List.rev q.rear</code> always before matching any branch. This means that the code could easily be made more efficient. However, I think it makes no sense to evaluate such an expression until after <code>q.front</code> has been matched, since in some situations this would be sufficient to decide which branch to take. For this reason, I prefer to present the algorithm as it is, and leave it to the reader to optimise it if they think it is necessary.</p>
+
+</body>
+</html>

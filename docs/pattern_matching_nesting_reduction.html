@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Blog Post</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>Pattern matching nesting reduction</h1>
+
+<p>We have to implement the function <code>classify</code> with the following signature</p>
+
+<pre><code class="language-fsharp">
+type Status = Started | NotStarted | Completed
+
+let classify (first: &#39;a option) (last: &#39;b option): Status = raise &lt;| NotImplementedException()
+</code></pre>
+<p>A common implementation would be the following:</p>
+
+<pre><code class="language-fsharp">
+let classify (first: &#39;t option) (last: &#39;u option) =
+
+  match first with
+
+  | Some _ -&gt;
+
+    match last with
+
+    | Some _ -&gt; Completed
+
+    | _ -&gt; Started
+
+  | _ -&gt; NotStarted
+</code></pre>
+<pre><code class="language-fsharp">
+[classify (Some 0) None; classify None (Some &quot;x&quot;); classify (Some 0) (Some &quot;y&quot;)]
+</code></pre>
+<p>However, we can make a trade of nested pattern matching by a more complex data structure and a simpler pattern match:</p>
+
+<pre><code class="language-fsharp">
+let classify (first: &#39;t option) (last: &#39;u option) =
+
+  match first, last with
+
+  | Some _, Some _ -&gt; Completed
+
+  | Some _, _ -&gt; Started 
+
+  | _ -&gt; NotStarted
+</code></pre>
+<pre><code class="language-fsharp">
+[classify (Some 0) None; classify None (Some &quot;x&quot;); classify (Some 0) (Some &quot;y&quot;)]
+</code></pre>
+<p>The trick can be generalized if the following conditions are true</p>
+<ul>
+<li><p>you have a nested pattern matching</p>
+</li>
+<li><p>the decision to take one branch or another depends only on pure values (no implicit state can change the decision)</p>
+</li>
+</ul>
+<p>Then what we do is encoding in each branch the precondition necessary to produce each value in the original code. Let's anotate the previous example with such preconditions:</p>
+
+<pre><code class="language-fsharp">
+let classify (first: &#39;t option) (last: &#39;u option) =
+
+  match first with
+
+  | Some _ -&gt;
+
+    match last with
+
+    | Some _ -&gt;
+
+        // precondition: first.IsSome &amp;&amp; last.IsSome 
+
+        Completed
+
+    | _ -&gt;
+
+        // precondition: first.IsSome &amp;&amp; last.IsNone
+
+        Started
+
+  | _ -&gt; 
+
+    // precondition: first.IsNone
+
+    NotStarted
+</code></pre>
+<p>Now you can see we only use the arrow <code>-&gt;</code> when we match the exact condition that produces a value, and by following that principle we continue by creating a more complex structure to match, but we reduce the nested matches. The inspiration for this trick comes from <a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD472.html">Dijkstra's Guarded Command Language</a> and <a href="https://books.google.de/books/about/Programming.html?id=4nJqQgAACAAJ&amp;redir_esc=y">Programming: The Derivation of Algorithms</a>.</p>
+
+</body>
+</html>
