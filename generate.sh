@@ -1,6 +1,14 @@
 #!/bin/bash
 
+rm -r docs
 spf=structured_programming_in_fsharp
-git clone --depth 1 "https://github.com/lamg/$spf" -o $spf
-dotnet run --project web_generator/Cli $spf
-rm -rf $spf
+wget "https://github.com/lamg/$spf/archive/refs/heads/master.zip"
+unzip master.zip
+mv "$spf-master" docs
+dotnet tool restore
+dotnet fsdocs build
+rm -rf docs
+rm master.zip
+mv output docs
+rm docs/Dockerfile
+rm docs/NuGet.config

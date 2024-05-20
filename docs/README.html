@@ -7,17 +7,17 @@
     <meta content="" name="author">
     <!-- Opengraph properties (https://ogp.me/) -->
     <meta property="og:site_name" content="lamg.github.io">
-    <meta property="og:title" content="Exception vs Result
+    <meta property="og:title" content="Structured programming in F#
 " />
-    <meta property="og:url" content="/lamg.github.io/script.html">
+    <meta property="og:url" content="/lamg.github.io/README.html">
     <meta property="og:type" content="website" />
     <!-- Twitter cards (https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary-card-with-large-image) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="/lamg.github.io/">
-    <meta name="twitter:title" content="Exception vs Result
+    <meta name="twitter:title" content="Structured programming in F#
 ">
     
-    <title>Exception vs Result
+    <title>Structured programming in F#
  | lamg.github.io</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
@@ -61,7 +61,7 @@
 
   </a>
 </li>             
-<li class="nav-item ">
+<li class="nav-item active">
   <a class="nav-link" href="/lamg.github.io/README.html">
     Structured programming in F#
 
@@ -73,7 +73,7 @@
 
   </a>
 </li>             
-<li class="nav-item active">
+<li class="nav-item ">
   <a class="nav-link" href="/lamg.github.io/exception_vs_result.html">
     Exception vs Result
 
@@ -126,7 +126,7 @@
 
   </a>
 </li>             
-<li class="nav-item ">
+<li class="nav-item active">
   <a class="nav-link" href="/lamg.github.io/README.html">
     Structured programming in F#
 
@@ -138,7 +138,7 @@
 
   </a>
 </li>             
-<li class="nav-item active">
+<li class="nav-item ">
   <a class="nav-link" href="/lamg.github.io/exception_vs_result.html">
     Exception vs Result
 
@@ -155,36 +155,28 @@
 </aside>
 <main>
     <div id="content">
-        <h1><a name="Exception-vs-Result" class="anchor" href="#Exception-vs-Result">Exception vs Result</a></h1>
-<p>An exception happens after the violation of a precondition in our code. For example, in the code below <code>y ≠ 0</code> is a precondition:</p>
-<pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">x</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">stdin</span><span class="pn">.</span><span class="id">ReadLine</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="fn">int</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">y</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">stdin</span><span class="pn">.</span><span class="id">ReadLine</span><span class="pn">(</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="fn">int</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="id">r</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="id">x</span> <span class="o">/</span> <span onmouseout="hideTip(event, 'fs4', 9)" onmouseover="showTip(event, 'fs4', 9)" class="id">y</span>
-<span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="fn">printfn</span> <span class="s">$&quot;{</span><span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="id">x</span><span class="s">} / {</span><span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="id">y</span><span class="s">} = {</span><span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">r</span><span class="s">}&quot;</span>
-</code></pre>
-<p>We also know that in some situations it is better to treat the error as any other value than to throw an exception. So the question is, do we represent an error as a value or do we throw an exception?</p>
-<p>My way of answering such dilemma is: can the abnormal situation be followed by operations in the same domain where it occurred or do we have to leave it?</p>
-<p>In the example above after <code>y = 0</code> there is no calculation allowing us to continue, it's the user who should know that <code>y = 0</code> is not part of the domain of the operation. So it makes sense to catch the exception or if possible to never let such value enter that scope.</p>
-<p>Sometimes we discover that our domain can be enriched with values representing abnormal situations, and that way we can continue operating within it. However, in some cases, adding a <code>Result</code> type doesn't change the fact the only thing we can do is leaving one or more scopes.</p>
-<p>In those instances an exception is more appropriate because adding <code>Result</code> is only making more cumbersome our way out.</p>
-<p>Originally posted on 2023/10/21 on <a href="https://twitter.com/lamg__/status/1715661969724690682">Twitter</a></p>
+        <h1><a name="Structured-programming-in-F" class="anchor" href="#Structured-programming-in-F">Structured programming in F#</a></h1>
+<p>One of the things I enjoyed when discovering for the first time functional programming, was how it reveals
+patterns that traditional imperative programming hides. I was delighted to discover how implementing <a href="https://en.wikipedia.org/wiki/Breadth-first_search">Breadth-First Search</a> with the sort of restrictions we  expect from functional programming, also reveals hidden patterns.</p>
+<p>Another surprise is that F# is a great candidate to explore functional data structures, which seem could be
+a good update to the excellent work by <a href="https://en.wikipedia.org/wiki/Chris_Okasaki#Purely_functional_data_structures">Chris Okasaki</a></p>
+<ul>
+<li><a href="bfs.html">Breadth-First Search</a></li>
+<li><a href="queue.html">Queue</a></li>
+<li><a href="pattern_matching_nesting_reduction.html">Pattern matching nesting reduction</a></li>
+<li><a href="fixed_points.html">Fixed points</a></li>
+<li><a href="exception_vs_result.html">Exception vs Result</a></li>
+</ul>
 
-        <div class="fsdocs-tip" id="fs1">val x: int</div>
-<div class="fsdocs-tip" id="fs2">val stdin&lt;&#39;T&gt; : System.IO.TextReader</div>
-<div class="fsdocs-tip" id="fs3">Multiple items<br />val int: value: &#39;T -&gt; int (requires member op_Explicit)<br /><br />--------------------<br />type int = int32<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; =
-  int</div>
-<div class="fsdocs-tip" id="fs4">val y: int</div>
-<div class="fsdocs-tip" id="fs5">val r: int</div>
-<div class="fsdocs-tip" id="fs6">val printfn: format: Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
-
+        
     </div>
 </main>
 <aside id="fsdocs-page-menu">
     <p id="on-this-page">On this page</p>
     <ul>
   <li class="level-1">
-    <a href="#Exception-vs-Result">
-      Exception vs Result
+    <a href="#Structured-programming-in-F">
+      Structured programming in F#
     </a>
   </li>
 </ul>
