@@ -1,0 +1,45 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+#avatar {
+    width:100px; 
+    height:100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#contact {
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+  }
+  
+.description {
+    color: grey;
+    font-size: 18px;
+}
+
+.card {
+    max-width: 40em;
+    max-height: 10em;
+    margin: 2em auto auto auto;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    border-radius: 4%;
+}
+
+.card img {
+    max-width: 10em;
+    border-radius: 5% 0 0 5%;
+}
+
+
+.card_text {
+    margin-left: 1em;
+}
+
+.card_text h1 {
+    margin-top:0;
+}
