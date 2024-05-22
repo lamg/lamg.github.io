@@ -22,6 +22,11 @@ body {
     color: grey;
 }
 
+.social {
+    max-width: 30px;
+    max-height: 30px;
+    margin-right: 10px;
+}
 
 
 @media screen and (max-width: 992px) {
