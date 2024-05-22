@@ -31,10 +31,11 @@ body {
         display: flex;
         flex-direction: column;
         border-radius: 4%;
+        align-items: center;
     }
     
     .card img {
-        max-width: 40em;
+        max-width: 10em;
         border-radius: 5% 5% 0 0;
     }
 
