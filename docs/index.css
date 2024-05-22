@@ -7,6 +7,11 @@ body {
     object-fit: cover;
 }
 
+.fa {
+    font-size: xx-large;
+    margin-right: 0.5em;
+}
+
 #contact {
     max-width: 300px;
     margin: auto;
@@ -16,6 +21,8 @@ body {
 .description {
     color: grey;
 }
+
+
 
 @media screen and (max-width: 992px) {
     #avatar {
