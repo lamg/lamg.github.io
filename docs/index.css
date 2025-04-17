@@ -11,15 +11,15 @@ body {
     margin: auto;
     text-align: center;
 }
-  
+
 .description {
     color: grey;
 }
 
 @media screen and (max-width: 992px) {
     #avatar {
-        width:20vw;
-        height:20vw;
+        width: 20vw;
+        height: 20vw;
     }
 
     .card {
@@ -32,7 +32,7 @@ body {
         border-radius: 4%;
         align-items: center;
     }
-    
+
     .card img {
         max-width: 10em;
         border-radius: 5% 5% 0 0;
@@ -40,6 +40,12 @@ body {
 
     .description {
         font-size: larger;
+    }
+
+    #social-links {
+        max-width: 50px;
+        display: flex;
+        flex-direction: row;
     }
 }
 
@@ -49,10 +55,10 @@ body {
     }
 
     #avatar {
-        width:10vw; 
-        height:10vw;
+        width: 10vw;
+        height: 10vw;
     }
-    
+
     .card {
         max-width: 40em;
         max-height: 10em;
@@ -63,22 +69,22 @@ body {
         border-radius: 5px;
         border-style: solid;
         border-width: 1px;
-        border-color:lightgray;
+        border-color: lightgray;
 
     }
-    
+
     .card img {
         max-width: 10em;
         border-radius: 5px 0 0 5px;
 
-    }   
-    
+    }
+
     .card_text {
         margin: 1em 1em 1em 1em;
     }
-    
+
     .card_text h1 {
-        margin-top:0;
+        margin-top: 0;
     }
 
     .description {
