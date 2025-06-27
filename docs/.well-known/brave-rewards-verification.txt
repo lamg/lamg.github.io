@@ -1,4 +1,4 @@
 This is a Brave Creators publisher verification file.
 
-Domain: lamg.dev
+Domain: lamg.github.io
 Token: a57d354143f6ddaafdfac9476b20990eee57a53e66f69a3f041ca448f9d0dab6
