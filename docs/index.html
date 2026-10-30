@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Luis Ángel Méndez Gort</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link href="index.css" rel="stylesheet" />
 </head>
 
 <body>
-    <aside id="contact">
-        <img src="https://avatars.githubusercontent.com/u/3207821" id="avatar" alt="LAMG">
-        <h1>Luis Ángel Méndez Gort</h1>
-            <p class="description">Solving problems</p>
+    <div class="page">
+        <header id="contact">
+            <img src="https://avatars.githubusercontent.com/u/3207821" id="avatar" alt="LAMG">
+            <h1>Luis Ángel Méndez Gort</h1>
+            <p class="tagline">Solving problems</p>
             <div id="social-links">
-                <a href="https://github.com/lamg"><img class="social" src="github.svg"></a>
-                <a href="https://x.com/lamg_dev"><img class="social" src="x-twitter.svg"></a>
-                <a rel="me" href="https://mastodon.social/@lamg__"><img class="social" src="mastodon.svg"></a>
-                <div style="display: none;"><a rel="me" href="https://mastodon.social/@lamg__">Mastodon</a></div>
+                <a href="https://github.com/lamg" aria-label="GitHub"><img class="social" src="github.svg" alt=""></a>
+                <a href="https://x.com/lamg_dev" aria-label="X"><img class="social" src="x-twitter.svg" alt=""></a>
             </div>
-    </aside>
-    <main>
-        <article class="card">
-            <a href="/structured_programming_in_fsharp"><img alt="structured_sharpie" src="logo_small.png"></a>
-            <div class="card_text">
-                <h1>Structured programming in F#</h1>
-                <p class="description">How to structure programs following the functional style, relying on techniques
-                    like inmutability, concurrency and dense modules.</p>
-            </div>
-        </article>
-    </main>
+        </header>
+        <main>
+            <a class="card" href="/pl_theories/">
+                <img class="card_image" src="pl_theories_thumb.jpg" alt="Woven triquetra surrounded by lambda calculus symbols">
+                <div class="card_text">
+                    <h2>Programming Language Theories</h2>
+                    <p class="description">Building a small programming language in Lean, from specifications to implementations and proofs.</p>
+                    <span class="card_link">lamg.dev/pl_theories <span aria-hidden="true">→</span></span>
+                </div>
+            </a>
+        </main>
+    </div>
 </body>
 
 </html>
